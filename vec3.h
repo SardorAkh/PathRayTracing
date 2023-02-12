@@ -55,6 +55,10 @@ public:
 	inline static vec3 random(double min, double max) {
 		return vec3(random_double(min, max), random_double(min, max), random_double(min, max));
 	}
+	bool near_zero() const {
+		const auto s = 1e-8;
+		return(fabs(e[0]) < s) && (fabs(e[1]) < s) && (fabs(e[2] < s));
+	}
 
 public:
 	double e[3];
@@ -78,6 +82,9 @@ inline vec3 operator-(const vec3& u, const vec3& v) {
 	return vec3(u.e[0] - v.e[0], u.e[1] - v.e[1], u.e[2] - v.e[2]);
 }
 
+inline vec3 operator*(const vec3& u, const vec3& v) {
+	return vec3(u.e[0] * v.e[0], u.e[1] * v.e[1], u.e[2] * v.e[2]);
+}
 inline vec3 operator*(const vec3& u, double t) {
 	return vec3(u.e[0] * t, u.e[1] * t, u.e[2] * t);
 }
@@ -107,5 +114,8 @@ inline vec3 random_in_unit_sphere() {
 }
 inline vec3 random_unit_vector() {
 	return unit_vector(random_in_unit_sphere());
+}
+inline vec3 reflect(const vec3& v, const vec3& n) {
+	return v - 2 * dot(v, n) * n;
 }
 #endif
